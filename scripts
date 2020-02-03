@@ -1,0 +1,16 @@
+2mass = get VizieR(2MASS-PSC) $1 $2 14'
+sync
+sdss = get VizieR(SDSS-DR9) $1 $2 14'
+sync
+2massdss= xmatch 2mass sdss 4 bestmatch
+sync
+hide 2mass
+sync
+hide sdss
+sync
+filter candidates { ${cl_tab2}==6 && ${umag_tab2}>22.0 && ${gmag_tab2}>22.2 && ${Jmag_tab1}-${Hmag_tab1}<0.3 && ${Hmag_tab1}-${Kmag_tab1}<0.3 {draw} }
+#(this is a single line, remove the tabs and linebreaks)
+sync
+select 2massdss
+sync
+cplane candidates

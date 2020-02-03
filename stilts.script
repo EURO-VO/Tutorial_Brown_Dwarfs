@@ -1,0 +1,7 @@
+java -jar ~/Programs/STILTS/stilts.jar tpipe in='http://vizier.u-strasbg.fr/viz-bin/votable/-A?-source=II/246&-out.max=unlimited&verb=3&RA=127.5&DEC=+1.5&SR=0.2333333' out=2mass.xml
+
+java -jar ~/Programs/STILTS/stilts.jar tpipe in='http://vizier.u-strasbg.fr/viz-bin/votable?-source=V/139&-out.max=unlimited&-c=127.5+1.5&-c.rd=0.2333333' out=sdssdr9.xml
+
+java -jar ~/Programs/STILTS/stilts.jar tskymatch2 ifmt1=votable in1=2mass.xml ifmt2=votable in2=sdssdr9.xml ra1=RAJ2000 dec1=DEJ2000 ra2=RA_ICRS dec2=DE_ICRS error=4 find=best join=1and2 ofmt=votable out=cross.xml
+
+java -jar ~/Programs/STILTS/stilts.jar tpipe ifmt=votable in=cross.xml cmd='select "cl==6 && umag>22.0 && gmag>22.2 && Jmag-Hmag<0.3 && Hmag-Kmag<0.3" ' ofmt=votable out=candidate.xml
